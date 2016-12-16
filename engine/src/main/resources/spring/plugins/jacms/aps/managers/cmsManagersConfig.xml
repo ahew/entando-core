@@ -77,8 +77,9 @@
     <bean id="jacmsBaseContentRenderer" class="com.agiletec.plugins.jacms.aps.system.services.renderer.BaseContentRenderer" 
           parent="BaseEntityRenderer" >
         <property name="contentModelManager" ref="jacmsContentModelManager" />
+        <property name="systemInfoWrapperFactory" ref="SystemInfoWrapperFactory" />
     </bean>
-    
+	
     <bean id="jacmsContentPageMapperManager" class="com.agiletec.plugins.jacms.aps.system.services.contentpagemapper.ContentPageMapperManager" 
           parent="abstractService" >
         <property name="pageManager" ref="PageManager" />

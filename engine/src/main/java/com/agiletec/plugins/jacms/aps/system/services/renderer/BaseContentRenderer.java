@@ -19,6 +19,8 @@ import java.util.List;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
+import org.entando.entando.aps.system.common.renderer.wrapper.ISystemInfoWrapperFactory;
+import org.entando.entando.aps.system.common.renderer.wrapper.SystemInfoWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +57,7 @@ public class BaseContentRenderer extends BaseEntityRenderer implements IContentR
 			velocityContext.put(this.getEntityWrapperContextName(), contentWrapper);
 			I18nManagerWrapper i18nWrapper = new I18nManagerWrapper(langCode, this.getI18nManager());
 			velocityContext.put("i18n", i18nWrapper);
-			SystemInfoWrapper systemInfoWrapper = new SystemInfoWrapper(reqCtx);
+			SystemInfoWrapper systemInfoWrapper = this.getSystemInfoWrapperFactory().buildSystemInfoWrapper(reqCtx);
 			velocityContext.put("info", systemInfoWrapper);
 			StringWriter stringWriter = new StringWriter();
 			boolean isEvaluated = Velocity.evaluate(velocityContext, stringWriter, "render", contentModel);
@@ -106,6 +108,14 @@ public class BaseContentRenderer extends BaseEntityRenderer implements IContentR
 		this._contentModelManager = contentModelManager;
 	}
 	
+	protected ISystemInfoWrapperFactory getSystemInfoWrapperFactory() {
+		return systemInfoWrapperFactory;
+	}
+	public void setSystemInfoWrapperFactory(ISystemInfoWrapperFactory systemInfoWrapperFactory) {
+		this.systemInfoWrapperFactory = systemInfoWrapperFactory;
+	}
+	
 	private IContentModelManager _contentModelManager;
+	private ISystemInfoWrapperFactory systemInfoWrapperFactory;
 	
 }
